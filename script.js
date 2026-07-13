@@ -1,63 +1,40 @@
+const texts=[
 
-// typing welcome
+[
+"name",
+"Welcome, I'm Farbod Daneshjoo"
+],
 
+[
+"title",
+"Software Developer | Open Source Contributor"
+],
 
-let text="Welcome, I'm Farbod Daneshjoo";
+[
+"desc",
+"Building projects with Python, C++, ROS2 and AI."
 
-let i=0;
+]
 
-
-function welcome(){
-
-
-if(i<text.length){
-
-document.getElementById("welcome")
-.innerHTML += text[i];
-
-
-i++;
-
-
-setTimeout(welcome,80);
-
-
-}
-
-}
-
-
-welcome();
+];
 
 
 
+function typeText(id,text,index=0){
 
 
-// title typing
+if(index < text.length){
 
 
-let title=
-"Software Developer | Open Source Contributor";
+document.getElementById(id)
+.innerHTML += text[index];
 
 
-let j=0;
+setTimeout(()=>{
 
+typeText(id,text,index+1)
 
-
-function typeTitle(){
-
-
-if(j<title.length){
-
-
-document.querySelector("#typing")
-.innerHTML += title[j];
-
-
-j++;
-
-
-setTimeout(typeTitle,60);
+},50);
 
 
 }
@@ -67,7 +44,33 @@ setTimeout(typeTitle,60);
 
 
 
-typeTitle();
+
+async function start(){
+
+
+for(let t of texts){
+
+
+await new Promise(resolve=>{
+
+
+typeText(t[0],t[1]);
+
+
+setTimeout(resolve,t[1].length*50+500);
+
+
+});
+
+
+}
+
+
+}
+
+
+
+start();
 
 
 
@@ -75,7 +78,7 @@ typeTitle();
 
 
 
-// GitHub projects
+// گرفتن پروژه های GitHub
 
 
 fetch(
@@ -83,10 +86,10 @@ fetch(
 )
 
 
-.then(res=>res.json())
+.then(r=>r.json())
 
 
-.then(data=>{
+.then(repos=>{
 
 
 let box=document.getElementById("projects");
@@ -96,13 +99,22 @@ box.innerHTML="";
 
 
 
-data.slice(0,6)
+repos
+.sort((a,b)=>
+b.stargazers_count-a.stargazers_count
+)
+
+
+.slice(0,9)
+
 .forEach(repo=>{
 
 
 box.innerHTML += `
 
+
 <div class="repo">
+
 
 <h3>
 
@@ -118,48 +130,50 @@ ${repo.description || "No description"}
 </p>
 
 
-<a href="${repo.html_url}"
-target="_blank">
+⭐ ${repo.stargazers_count}
 
-View Project
+
+<br><br>
+
+
+<a href="${repo.html_url}">
+
+Open Repository
 
 </a>
 
 
 </div>
 
+
 `;
 
 
+});
+
 
 });
 
 
 
-});
 
 
 
 
 
+// animation scroll
 
 
-
-// Scroll animation
-
-
-const observer =
+const observer=
 new IntersectionObserver(entries=>{
 
 
-entries.forEach(entry=>{
+entries.forEach(e=>{
 
 
-if(entry.isIntersecting){
+if(e.isIntersecting){
 
-
-entry.target.classList.add("show");
-
+e.target.classList.add("show");
 
 }
 
@@ -172,4 +186,4 @@ entry.target.classList.add("show");
 
 
 document.querySelectorAll(".hidden")
-.forEach(el=>observer.observe(el));
+.forEach(x=>observer.observe(x));
