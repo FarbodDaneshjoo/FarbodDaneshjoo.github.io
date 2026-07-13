@@ -5,25 +5,34 @@ box-sizing:border-box;
 }
 
 
+
 body{
+
 
 margin:0;
 
-font-family:
-'Courier New',
-monospace;
-
-color:white;
 
 background:#020617;
 
+
+color:white;
+
+
+font-family:
+"Courier New",
+monospace;
+
+
 text-align:center;
+
 
 }
 
 
 
-.background{
+
+.bg{
+
 
 position:fixed;
 
@@ -32,13 +41,15 @@ inset:0;
 z-index:-1;
 
 
+
 background:
 
 radial-gradient(
 circle at top,
 #064e3b,
-#020617 60%
+#020617 70%
 );
+
 
 
 }
@@ -48,15 +59,17 @@ circle at top,
 header,
 section{
 
+
 max-width:1000px;
 
+
 margin:auto;
+
 
 padding:70px 20px;
 
 
 }
-
 
 
 
@@ -70,45 +83,31 @@ height:180px;
 
 border-radius:50%;
 
+
 object-fit:cover;
 
 
-border:4px solid #00ff99;
+border:5px solid #00ff99;
 
 
 box-shadow:
-
 0 0 40px #00ff99;
 
 
-animation:
-
-float 3s infinite;
-
-
 }
 
-
-
-
-@keyframes float{
-
-
-50%{
-
-transform:translateY(-15px);
-
-}
-
-
-}
 
 
 
 
 h1{
 
+
 font-size:55px;
+
+
+color:#00ff99;
+
 
 }
 
@@ -122,7 +121,7 @@ color:#00ff99;
 
 
 
-.buttons a{
+.btn{
 
 
 display:inline-block;
@@ -131,7 +130,7 @@ display:inline-block;
 margin:15px;
 
 
-padding:15px 30px;
+padding:15px 35px;
 
 
 background:#00ff99;
@@ -150,6 +149,8 @@ font-weight:bold;
 
 
 }
+
+
 
 
 
@@ -174,22 +175,16 @@ backdrop-filter:blur(10px);
 
 
 
-.skills span{
+.activity{
 
 
-display:inline-block;
+width:90%;
 
 
-padding:10px 20px;
+max-width:900px;
 
 
-margin:8px;
-
-
-background:#064e3b;
-
-
-border-radius:20px;
+border-radius:15px;
 
 
 }
@@ -197,7 +192,7 @@ border-radius:20px;
 
 
 
-.projects{
+#projects{
 
 
 display:grid;
@@ -219,17 +214,30 @@ gap:20px;
 
 
 background:
-
 rgba(255,255,255,.1);
 
 
-padding:20px;
+padding:25px;
 
 
 border-radius:20px;
 
 
+transition:.3s;
+
+
 }
+
+
+
+.repo:hover{
+
+
+transform:translateY(-10px);
+
+
+}
+
 
 
 
@@ -244,36 +252,13 @@ color:#00ff99;
 
 
 
-
-.calendar{
-
-
-max-width:900px;
-
-width:100%;
-
-background:#020617;
-
-
-padding:20px;
-
-
-border-radius:20px;
-
-
-}
-
-
-
-
-
-.hidden{
+.animate{
 
 
 opacity:0;
 
 
-transform:translateY(50px);
+transform:translateY(40px);
 
 
 transition:1s;
@@ -282,7 +267,8 @@ transition:1s;
 }
 
 
-.show{
+
+.animate.show{
 
 
 opacity:1;
@@ -297,6 +283,8 @@ transform:none;
 
 footer{
 
-padding:30px;
+
+padding:40px;
+
 
 }
