@@ -4,10 +4,9 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Farbod Daneshjoo | Software Developer</title>
+<title>Farbod Daneshjoo</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -17,37 +16,46 @@
 <body>
 
 
-<div class="background"></div>
-
+<div class="bg"></div>
 
 
 <header>
 
 
-<img src="images/profile.png" class="profile">
+<img 
+src="images/profile.png"
+class="profile"
+onerror="this.style.display='none'"
+>
 
 
 <h1 id="name"></h1>
 
 
-<h2 id="title"></h2>
+<h2 id="role"></h2>
 
 
-<p id="desc"></p>
+<p id="description"></p>
 
 
 
-<div class="buttons">
+<div>
 
-<a href="https://github.com/FarbodDaneshjoo"
+<a class="btn"
+href="https://github.com/FarbodDaneshjoo"
 target="_blank">
-💻 GitHub
+
+GitHub
+
 </a>
 
 
-<a href="https://www.linkedin.com/"
+<a class="btn"
+href="https://linkedin.com"
 target="_blank">
-🔗 LinkedIn
+
+LinkedIn
+
 </a>
 
 
@@ -60,7 +68,7 @@ target="_blank">
 
 
 
-<section class="hidden">
+<section class="animate">
 
 
 <h2>About Me</h2>
@@ -71,123 +79,88 @@ target="_blank">
 
 <p>
 
-I am a software developer interested in
-building reliable software, open source,
-robotics and artificial intelligence.
-
-</p>
-
-
-<p>
-
-My focus areas:
-
-</p>
-
-
-<div class="skills">
-
-<span>Python</span>
-
-<span>ROS2</span>
-
-<span>AI</span>
-
-<span>Open Source</span>
-
-</div>
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-<section class="hidden">
-
-
-<h2>GitHub Activity</h2>
-
-
-<img
-
-class="calendar"
-
-src="https://ghchart.rshah.org/00ff99/FarbodDaneshjoo"
-
->
-
-
-</section>
-
-
-
-
-
-
-
-<section class="hidden">
-
-
-<h2>My GitHub Projects</h2>
-
-
-<div id="projects"
-class="projects">
-
-Loading...
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-<section class="hidden">
-
-
-<h2>Open Source Contributions</h2>
-
-
-<div class="card">
-
-
-<p>
-
-My contributions:
+I am a Software Developer interested in:
 
 </p>
 
 
 <ul>
 
-<li>Pull Requests</li>
+<li>🐍 Python</li>
 
-<li>Bug Fixes</li>
+<li>🤖 Artificial Intelligence</li>
 
-<li>Code Reviews</li>
+<li>🚀 ROS2 Robotics</li>
 
-<li>Forked Projects</li>
-
+<li>🌎 Open Source</li>
 
 </ul>
+
+
+<p>
+
+I build projects, fix bugs and contribute
+to open source communities.
+
+</p>
 
 
 </div>
 
 
 </section>
+
+
+
+
+
+
+
+<section class="animate">
+
+
+<h2>
+GitHub Activity
+</h2>
+
+
+<img
+
+class="activity"
+
+src="https://ghchart.rshah.org/00ff99/FarbodDaneshjoo"
+
+>
+
+
+
+</section>
+
+
+
+
+
+
+<section class="animate">
+
+
+<h2>
+My Projects
+</h2>
+
+
+<div id="projects">
+
+
+Loading projects...
+
+
+</div>
+
+
+</section>
+
+
 
 
 
@@ -195,9 +168,10 @@ My contributions:
 
 <footer>
 
-Farbod Daneshjoo © 2026
+© 2026 Farbod Daneshjoo
 
 </footer>
+
 
 
 
@@ -205,6 +179,5 @@ Farbod Daneshjoo © 2026
 
 
 </body>
-
 
 </html>
