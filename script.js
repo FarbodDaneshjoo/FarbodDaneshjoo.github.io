@@ -1,58 +1,63 @@
-const welcome =
-"Welcome, I'm Farbod Daneshjoo";
+
+// typing welcome
 
 
-let i = 0;
+let text="Welcome, I'm Farbod Daneshjoo";
+
+let i=0;
 
 
-function typeWelcome(){
+function welcome(){
 
 
-if(i < welcome.length){
+if(i<text.length){
 
+document.getElementById("welcome")
+.innerHTML += text[i];
 
-document.getElementById("welcome").innerHTML += welcome[i];
 
 i++;
 
 
-setTimeout(typeWelcome,70);
+setTimeout(welcome,80);
 
 
 }
 
-
 }
 
 
-
-typeWelcome();
-
+welcome();
 
 
 
 
-const text =
+
+// title typing
+
+
+let title=
 "Software Developer | Open Source Contributor";
 
 
-let j = 0;
+let j=0;
 
 
 
-function typing(){
+function typeTitle(){
 
 
-if(j < text.length){
+if(j<title.length){
 
 
-document.getElementById("typing").innerHTML += text[j];
+document.querySelector("#typing")
+.innerHTML += title[j];
 
 
 j++;
 
 
-setTimeout(typing,60);
+setTimeout(typeTitle,60);
 
 
 }
@@ -62,6 +67,109 @@ setTimeout(typing,60);
 
 
 
-typing();console.log(
-"Welcome to Farbod Daneshjoo Portfolio 🚀"
-);
+typeTitle();
+
+
+
+
+
+
+
+// GitHub projects
+
+
+fetch(
+"https://api.github.com/users/FarbodDaneshjoo/repos"
+)
+
+
+.then(res=>res.json())
+
+
+.then(data=>{
+
+
+let box=document.getElementById("projects");
+
+
+box.innerHTML="";
+
+
+
+data.slice(0,6)
+.forEach(repo=>{
+
+
+box.innerHTML += `
+
+<div class="repo">
+
+<h3>
+
+${repo.name}
+
+</h3>
+
+
+<p>
+
+${repo.description || "No description"}
+
+</p>
+
+
+<a href="${repo.html_url}"
+target="_blank">
+
+View Project
+
+</a>
+
+
+</div>
+
+`;
+
+
+
+});
+
+
+
+});
+
+
+
+
+
+
+
+
+// Scroll animation
+
+
+const observer =
+new IntersectionObserver(entries=>{
+
+
+entries.forEach(entry=>{
+
+
+if(entry.isIntersecting){
+
+
+entry.target.classList.add("show");
+
+
+}
+
+
+});
+
+
+});
+
+
+
+document.querySelectorAll(".hidden")
+.forEach(el=>observer.observe(el));
