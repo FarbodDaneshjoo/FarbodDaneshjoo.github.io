@@ -1,73 +1,63 @@
-const texts=[
+const items=[
 
-[
-"name",
-"Welcome, I'm Farbod Daneshjoo"
-],
+["name",
+"Welcome, I'm Farbod Daneshjoo"],
 
-[
-"title",
-"Software Developer | Open Source Contributor"
-],
+["role",
+"Software Developer | Open Source Contributor"],
 
-[
-"desc",
-"Building projects with Python, C++, ROS2 and AI."
-
-]
+["description",
+"Building projects with Python, C++, ROS2 and AI"]
 
 ];
 
 
 
-function typeText(id,text,index=0){
+async function writeText(id,text){
 
 
-if(index < text.length){
+let element=document.getElementById(id);
 
 
-document.getElementById(id)
-.innerHTML += text[index];
+for(let char of text){
 
 
-setTimeout(()=>{
-
-typeText(id,text,index+1)
-
-},50);
+element.innerHTML += char;
 
 
-}
+await new Promise(
+r=>setTimeout(r,40)
+);
 
 
 }
 
+
+}
 
 
 
 async function start(){
 
 
-for(let t of texts){
+for(let item of items){
 
 
-await new Promise(resolve=>{
+await writeText(
+item[0],
+item[1]
+);
 
 
-typeText(t[0],t[1]);
-
-
-setTimeout(resolve,t[1].length*50+500);
-
-
-});
-
-
-}
+await new Promise(
+r=>setTimeout(r,500)
+);
 
 
 }
 
+
+}
 
 
 start();
@@ -78,7 +68,7 @@ start();
 
 
 
-// گرفتن پروژه های GitHub
+// گرفتن پروژه های Github
 
 
 fetch(
@@ -86,13 +76,14 @@ fetch(
 )
 
 
-.then(r=>r.json())
+.then(response=>response.json())
 
 
 .then(repos=>{
 
 
-let box=document.getElementById("projects");
+let box=
+document.getElementById("projects");
 
 
 box.innerHTML="";
@@ -100,18 +91,20 @@ box.innerHTML="";
 
 
 repos
-.sort((a,b)=>
-b.stargazers_count-a.stargazers_count
+.sort(
+(a,b)=>
+b.stargazers_count -
+a.stargazers_count
 )
 
 
-.slice(0,9)
+.slice(0,6)
+
 
 .forEach(repo=>{
 
 
 box.innerHTML += `
-
 
 <div class="repo">
 
@@ -130,21 +123,20 @@ ${repo.description || "No description"}
 </p>
 
 
-⭐ ${repo.stargazers_count}
+⭐ ${repo.stars}
 
 
-<br><br>
+<br>
 
 
-<a href="${repo.html_url}">
+<a href="${repo.html_url}" target="_blank">
 
-Open Repository
+Open
 
 </a>
 
 
 </div>
-
 
 `;
 
@@ -152,6 +144,15 @@ Open Repository
 });
 
 
+})
+
+.catch(()=>{
+
+document.getElementById("projects")
+.innerHTML=
+"Could not load GitHub projects";
+
+
 });
 
 
@@ -161,19 +162,23 @@ Open Repository
 
 
 
-// animation scroll
+
+// Scroll animation
 
 
-const observer=
-new IntersectionObserver(entries=>{
+const observer =
+new IntersectionObserver(
+(entries)=>{
 
 
-entries.forEach(e=>{
+entries.forEach(entry=>{
 
 
-if(e.isIntersecting){
+if(entry.isIntersecting){
 
-e.target.classList.add("show");
+
+entry.target.classList.add("show");
+
 
 }
 
@@ -181,9 +186,13 @@ e.target.classList.add("show");
 });
 
 
-});
+}
+);
 
 
 
-document.querySelectorAll(".hidden")
-.forEach(x=>observer.observe(x));
+document
+.querySelectorAll(".animate")
+.forEach(
+el=>observer.observe(el)
+);
