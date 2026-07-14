@@ -980,14 +980,39 @@ GitHub Profile
 
 </footer>
 
+<script>
+function loadCounter() {
 
+    if (window.goatcounter && window.goatcounter.visit_count) {
 
+        window.goatcounter.visit_count({
 
+            append:"#visitor-count",
 
+            type:"html",
 
+            no_branding:true
+
+        });
+
+    } else {
+
+        setTimeout(loadCounter,100);
+
+    }
+
+}
+
+loadCounter();
+</script>
+
+<script
+data-goatcounter="https://farboddaneshjoo.goatcounter.com/count"
+async
+src="https://gc.zgo.at/count.js">
+</script>
 
 <script src="script.js"></script>
-
 
 </body>
 
