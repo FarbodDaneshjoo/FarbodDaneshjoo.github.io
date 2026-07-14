@@ -1,9 +1,10 @@
 // ===============================
-// Scroll Reveal Animation
+// Scroll Animation
 // ===============================
 
 
-const observer = new IntersectionObserver(
+const observer =
+new IntersectionObserver(
 
 (entries)=>{
 
@@ -20,9 +21,7 @@ entry.target.classList.add("active");
 },
 
 {
-
 threshold:0.15
-
 }
 
 );
@@ -31,9 +30,9 @@ threshold:0.15
 
 document
 .querySelectorAll(".reveal")
-.forEach(element=>{
+.forEach(item=>{
 
-observer.observe(element);
+observer.observe(item);
 
 });
 
@@ -44,62 +43,54 @@ observer.observe(element);
 
 
 // ===============================
-// Terminal Typing Effect
+// Terminal Animation
 // ===============================
 
 
-const terminalLines = [
+const messages=[
 
-"Building software projects...",
+"Building Python projects...",
 
 "Exploring Artificial Intelligence...",
 
 "Contributing to Open Source...",
 
-"Learning something new every day..."
+"Improving software engineering skills..."
 
 ];
 
 
-let terminalIndex = 0;
+let messageIndex=0;
 
 
-
-const statusText = document.querySelector(
+const terminalStatus =
+document.querySelector(
 ".terminal p:last-child"
 );
 
 
 
-function updateTerminal(){
+setInterval(()=>{
 
 
-if(!statusText)
-return;
+if(terminalStatus){
+
+terminalStatus.textContent =
+messages[messageIndex];
+
+messageIndex++;
 
 
+if(messageIndex >= messages.length){
 
-statusText.textContent =
-terminalLines[terminalIndex];
+messageIndex=0;
 
-
-
-terminalIndex++;
-
-
-if(terminalIndex >= terminalLines.length){
-
-terminalIndex = 0;
+}
 
 }
 
 
-
-}
-
-
-
-setInterval(updateTerminal,2500);
+},2500);
 
 
 
@@ -113,13 +104,12 @@ setInterval(updateTerminal,2500);
 // ===============================
 
 
-
 fetch(
 "https://api.github.com/users/FarbodDaneshjoo/repos"
 )
 
 
-.then(response=>response.json())
+.then(res=>res.json())
 
 
 .then(repos=>{
@@ -127,7 +117,6 @@ fetch(
 
 const box =
 document.getElementById("projects");
-
 
 
 box.innerHTML="";
@@ -143,8 +132,11 @@ repos
 
 (a,b)=>
 
-b.stargazers_count -
-a.stargazers_count
+(b.stargazers_count+b.forks_count)
+
+-
+
+(a.stargazers_count+a.forks_count)
 
 )
 
@@ -161,53 +153,53 @@ box.innerHTML += `
 <div class="repo">
 
 
-<h3>
-
-${repo.name}
-
-</h3>
-
+<h3>${repo.name}</h3>
 
 
 <p>
 
-${repo.description || "Open source project"}
+${repo.description || 
+"Open source project"}
 
 </p>
 
 
+<div class="repo-meta">
 
-<p>
+
+<span class="badge">
 
 💻 ${repo.language || "Code"}
 
-</p>
+</span>
 
 
+<span class="badge">
 
-<p>
+⭐ ${repo.stargazers_count}
 
-⭐ ${repo.stars || repo.stargazers_count}
+</span>
 
-&nbsp;
+
+<span class="badge">
 
 🍴 ${repo.forks_count}
 
-</p>
+</span>
+
+
+</div>
 
 
 
+<br>
 
-<a
 
-href="${repo.html_url}"
-
-target="_blank">
+<a href="${repo.html_url}" target="_blank">
 
 View Repository →
 
 </a>
-
 
 
 </div>
@@ -227,9 +219,8 @@ View Repository →
 
 
 document.getElementById("projects")
-.innerHTML =
-"Unable to load projects.";
-
+.innerHTML=
+"Projects unavailable";
 
 });
 
@@ -242,9 +233,8 @@ document.getElementById("projects")
 
 
 // ===============================
-// GitHub Statistics
+// GitHub Stats
 // ===============================
-
 
 
 fetch(
@@ -252,49 +242,26 @@ fetch(
 )
 
 
-.then(response=>response.json())
+.then(res=>res.json())
 
 
 .then(data=>{
 
 
-document
-.getElementById("commits")
-.textContent =
-data.commits ?? 0;
+commits.textContent =
+data.commits || 0;
 
 
-
-document
-.getElementById("prs")
-.textContent =
-data.pullRequests ?? 0;
+prs.textContent =
+data.pullRequests || 0;
 
 
-
-document
-.getElementById("issues")
-.textContent =
-data.issues ?? 0;
+issues.textContent =
+data.issues || 0;
 
 
-
-document
-.getElementById("reviews")
-.textContent =
-data.reviews ?? 0;
-
-
-
-})
-
-
-.catch(()=>{
-
-
-console.log(
-"GitHub stats unavailable"
-);
+reviews.textContent =
+data.reviews || 0;
 
 
 });
@@ -306,11 +273,9 @@ console.log(
 
 
 
-
 // ===============================
-// GitHub AI Summary
+// AI Summary
 // ===============================
-
 
 
 fetch(
@@ -318,7 +283,7 @@ fetch(
 )
 
 
-.then(response=>response.json())
+.then(res=>res.json())
 
 
 .then(data=>{
@@ -330,7 +295,6 @@ document
 data.summary;
 
 
-
 })
 
 
@@ -340,9 +304,7 @@ data.summary;
 document
 .getElementById("ai-summary")
 .textContent =
-
-"Farbod Daneshjoo is a software developer focused on Python, AI, ROS2 and Open Source development.";
-
+"Software developer focused on Python, AI and Open Source development.";
 
 });
 
@@ -353,26 +315,11 @@ document
 
 
 
-
 // ===============================
-// Current Year
+// Footer Year
 // ===============================
 
 
-
-const year =
-new Date().getFullYear();
-
-
-
-const footer =
-document.querySelector("footer p");
-
-
-
-if(footer){
-
-footer.textContent =
-`© ${year} Farbod Daneshjoo`;
-
-}
+document.querySelector("footer p")
+.textContent =
+`© ${new Date().getFullYear()} Farbod Daneshjoo`;
