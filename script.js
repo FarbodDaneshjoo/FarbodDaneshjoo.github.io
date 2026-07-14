@@ -669,3 +669,60 @@ footer.textContent =
 
 
 }
+
+// =================================
+// Visitor Counter
+// =================================
+
+const visitorCounter =
+document.getElementById("visitor-count");
+
+const todayCounter =
+document.getElementById("today-count");
+
+if(visitorCounter){
+
+fetch("https://api.countapi.xyz/hit/farboddaneshjoo.github.io/visits")
+
+.then(response=>response.json())
+
+.then(data=>{
+
+visitorCounter.textContent =
+data.value.toLocaleString();
+
+})
+
+.catch(()=>{
+
+visitorCounter.textContent="--";
+
+});
+
+}
+
+
+
+if(todayCounter){
+
+const today =
+new Date().toISOString().slice(0,10);
+
+fetch(`https://api.countapi.xyz/hit/farboddaneshjoo.github.io/${today}`)
+
+.then(response=>response.json())
+
+.then(data=>{
+
+todayCounter.textContent =
+data.value;
+
+})
+
+.catch(()=>{
+
+todayCounter.textContent="--";
+
+});
+
+}
