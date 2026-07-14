@@ -1,153 +1,82 @@
 name: Update AI Profile Summary
 
-
-
 on:
 
   schedule:
-
     - cron: "0 0 * * *"
-
 
   workflow_dispatch:
 
 
-
-
-
 jobs:
 
-
   update:
-
 
     runs-on: ubuntu-latest
 
 
-
     permissions:
-
       contents: write
-
 
 
     steps:
 
 
-
-    - name:
-      Checkout repository
-
-
-      uses:
-        actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
 
 
-
-
-
-    - name:
-      Setup Python
-
-
-      uses:
-        actions/setup-python@v5
-
+    - name: Setup Python
+      uses: actions/setup-python@v5
 
       with:
-
         python-version: "3.11"
 
 
 
-
-
-
-    - name:
-      Install dependencies
-
-
-      run:
-
-
+    - name: Install dependencies
+      run: |
         pip install requests
 
 
 
-
-
-
-    - name:
-      Update GitHub Statistics
-
+    - name: Update GitHub Statistics
 
       env:
 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-        GITHUB_TOKEN:
-          ${{ secrets.GITHUB_TOKEN }}
-
-
-
-      run:
-
+      run: |
 
         python scripts/update_stats.py
 
 
 
-
-
-
-    - name:
-      Generate AI Summary
-
+    - name: Generate AI Summary
 
       env:
 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-        GITHUB_TOKEN:
-          ${{ secrets.GITHUB_TOKEN }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
-
-        OPENAI_API_KEY:
-          ${{ secrets.OPENAI_API_KEY }}
-
-
-
-      run:
-
+      run: |
 
         python scripts/generate_summary.py
 
 
 
+    - name: Commit changes
 
-
-
-    - name:
-      Commit changes
-
-
-
-      run:
-
+      run: |
 
         git config user.name "github-actions"
 
-
         git config user.email "github-actions@github.com"
-
-
 
         git add data/
 
-
-        git commit -m "Update profile statistics"
-
-        || echo "No changes"
-
-
+        git commit -m "Update profile data" || echo "No changes"
 
         git push
