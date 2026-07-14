@@ -1,7 +1,6 @@
 name: Update AI Profile Summary
 
 on:
-
   schedule:
     - cron: "0 0 * * *"
 
@@ -9,11 +8,9 @@ on:
 
 
 jobs:
-
   update:
 
     runs-on: ubuntu-latest
-
 
     permissions:
       contents: write
@@ -21,62 +18,45 @@ jobs:
 
     steps:
 
-
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
 
-    - name: Setup Python
-      uses: actions/setup-python@v5
-
-      with:
-        python-version: "3.11"
-
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
 
-    - name: Install dependencies
-      run: |
-        pip install requests
+      - name: Install dependencies
+        run: |
+          pip install requests
 
 
+      - name: Update GitHub Statistics
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Update GitHub Statistics
-
-      env:
-
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      run: |
-
-        python scripts/update_stats.py
+        run: |
+          python scripts/update_stats.py
 
 
+      - name: Generate AI Summary
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
-    - name: Generate AI Summary
-
-      env:
-
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-
-      run: |
-
-        python scripts/generate_summary.py
+        run: |
+          python scripts/generate_summary.py
 
 
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
 
-    - name: Commit changes
+          git add data/
 
-      run: |
+          git commit -m "Update profile data" || echo "No changes"
 
-        git config user.name "github-actions"
-
-        git config user.email "github-actions@github.com"
-
-        git add data/
-
-        git commit -m "Update profile data" || echo "No changes"
-
-        git push
+          git push
