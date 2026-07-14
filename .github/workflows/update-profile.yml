@@ -42,6 +42,8 @@ jobs:
 
           fetch-depth: 0
 
+          token: ${{ secrets.GITHUB_TOKEN }}
+
 
 
 
@@ -93,6 +95,7 @@ jobs:
 
 
       - name: Commit changes
+
         run: |
 
           git config user.name "github-actions"
@@ -100,18 +103,17 @@ jobs:
           git config user.email "github-actions@github.com"
 
 
-          git fetch origin main
-
-          git reset --hard origin/main
-
-
           git add data/
 
 
-          git commit -m "Update profile summary and stats" || echo "No changes"
+          if git diff --cached --quiet; then
 
+            echo "No changes to commit"
 
-          git push origin HEAD:main
+          else
 
+            git commit -m "Update profile summary and stats"
 
-          git push origin main
+            git push origin main
+
+          fi
