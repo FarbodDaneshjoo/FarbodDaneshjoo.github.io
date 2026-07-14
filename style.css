@@ -1,17 +1,11 @@
 *{
-
 box-sizing:border-box;
-
 }
-
 
 
 html{
-
 scroll-behavior:smooth;
-
 }
-
 
 
 body{
@@ -42,6 +36,7 @@ padding:80px 25px;
 text-align:center;
 
 }
+
 
 
 
@@ -76,7 +71,8 @@ object-fit:cover;
 
 border:5px solid #7c3aed;
 
-box-shadow:0 20px 50px rgba(124,58,237,.25);
+box-shadow:
+0 20px 50px rgba(124,58,237,.25);
 
 }
 
@@ -88,9 +84,9 @@ font-size:60px;
 
 font-weight:800;
 
-margin:25px 0 10px;
-
 color:#7c3aed;
+
+margin:25px 0 10px;
 
 }
 
@@ -120,12 +116,11 @@ font-size:24px;
 
 .hero p{
 
-font-size:21px;
+font-size:20px;
 
 color:#4b5563;
 
 }
-
 
 
 
@@ -156,11 +151,13 @@ transition:.3s;
 
 .button:hover{
 
-transform:translateY(-5px);
-
 background:#6d28d9;
 
+transform:translateY(-5px);
+
 }
+
+
 
 
 
@@ -175,8 +172,6 @@ background:#111827;
 
 color:white;
 
-text-align:left;
-
 padding:35px;
 
 border-radius:25px;
@@ -185,9 +180,12 @@ max-width:650px;
 
 margin:auto;
 
+text-align:left;
+
 font-family:monospace;
 
-box-shadow:0 20px 50px rgba(0,0,0,.15);
+box-shadow:
+0 20px 50px rgba(0,0,0,.15);
 
 }
 
@@ -203,6 +201,14 @@ color:#a78bfa;
 
 .terminal p{
 
+margin:10px 0;
+
+}
+
+
+
+.terminal p:nth-child(even){
+
 color:#ddd6fe;
 
 margin-left:20px;
@@ -213,7 +219,9 @@ margin-left:20px;
 
 
 
-/* CARDS */
+
+
+/* SUMMARY CARD */
 
 
 .card{
@@ -226,7 +234,8 @@ padding:40px;
 
 border-radius:30px;
 
-box-shadow:0 20px 50px rgba(109,40,217,.25);
+box-shadow:
+0 20px 50px rgba(109,40,217,.25);
 
 }
 
@@ -246,7 +255,7 @@ border-radius:30px;
 
 font-weight:700;
 
-margin-bottom:25px;
+margin-bottom:20px;
 
 }
 
@@ -254,11 +263,17 @@ margin-bottom:25px;
 
 
 
+
+
+/* ABOUT */
+
+
 .about-grid{
 
 display:grid;
 
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
 
 gap:25px;
 
@@ -278,7 +293,8 @@ padding:30px;
 
 border-radius:25px;
 
-box-shadow:0 10px 30px rgba(0,0,0,.06);
+box-shadow:
+0 10px 30px rgba(0,0,0,.06);
 
 transition:.3s;
 
@@ -290,6 +306,9 @@ transition:.3s;
 
 transform:translateY(-10px);
 
+box-shadow:
+0 20px 40px rgba(124,58,237,.15);
+
 }
 
 
@@ -299,6 +318,8 @@ transform:translateY(-10px);
 color:#7c3aed;
 
 }
+
+
 
 
 
@@ -339,6 +360,8 @@ font-weight:600;
 
 
 
+
+
 /* ACTIVITY */
 
 
@@ -349,8 +372,6 @@ background:#faf5ff;
 padding:35px;
 
 border-radius:30px;
-
-box-shadow:0 10px 30px rgba(124,58,237,.1);
 
 }
 
@@ -366,6 +387,8 @@ width:100%;
 
 
 
+
+
 /* STATS */
 
 
@@ -373,7 +396,8 @@ width:100%;
 
 display:grid;
 
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+grid-template-columns:
+repeat(auto-fit,minmax(200px,1fr));
 
 gap:25px;
 
@@ -391,8 +415,6 @@ padding:30px;
 
 border-radius:30px;
 
-box-shadow:0 15px 40px rgba(109,40,217,.2);
-
 }
 
 
@@ -404,6 +426,8 @@ font-size:45px;
 margin:0;
 
 }
+
+
 
 
 
@@ -454,16 +478,19 @@ color:#7c3aed;
 
 
 
+
+
 /* PROJECTS */
 
 
-#projects{
+.projects-grid{
 
 display:grid;
 
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+grid-template-columns:
+repeat(auto-fit,minmax(300px,1fr));
 
-gap:25px;
+gap:30px;
 
 }
 
@@ -471,9 +498,9 @@ gap:25px;
 
 .repo{
 
-background:#6d28d9;
+background:white;
 
-color:white;
+border:1px solid #e5e7eb;
 
 padding:30px;
 
@@ -481,7 +508,37 @@ border-radius:30px;
 
 text-align:left;
 
-transition:.3s;
+position:relative;
+
+transition:.35s;
+
+box-shadow:
+0 15px 40px rgba(0,0,0,.08);
+
+}
+
+
+
+.repo::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:5px;
+
+background:
+linear-gradient(
+90deg,
+#7c3aed,
+#a78bfa
+);
 
 }
 
@@ -489,7 +546,58 @@ transition:.3s;
 
 .repo:hover{
 
-transform:translateY(-10px);
+transform:translateY(-12px);
+
+box-shadow:
+0 25px 60px rgba(124,58,237,.25);
+
+}
+
+
+
+.repo h3{
+
+color:#6d28d9;
+
+font-size:24px;
+
+}
+
+
+
+.repo p{
+
+color:#4b5563;
+
+}
+
+
+
+.repo-meta{
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+}
+
+
+
+.badge{
+
+background:#ede9fe;
+
+color:#6d28d9;
+
+padding:6px 14px;
+
+border-radius:20px;
+
+font-size:13px;
+
+font-weight:700;
 
 }
 
@@ -497,11 +605,15 @@ transform:translateY(-10px);
 
 .repo a{
 
-color:#ddd6fe;
+color:#7c3aed;
 
 font-weight:700;
 
+text-decoration:none;
+
 }
+
+
 
 
 
@@ -534,6 +646,8 @@ transform:translateY(0);
 
 
 
+
+
 footer{
 
 padding:50px;
@@ -548,7 +662,6 @@ color:#7c3aed;
 
 
 
-/* MOBILE */
 
 
 @media(max-width:700px){
