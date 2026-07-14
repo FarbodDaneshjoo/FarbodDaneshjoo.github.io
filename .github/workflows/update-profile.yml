@@ -93,7 +93,6 @@ jobs:
 
 
       - name: Commit changes
-
         run: |
 
           git config user.name "github-actions"
@@ -101,13 +100,18 @@ jobs:
           git config user.email "github-actions@github.com"
 
 
-          git pull --rebase origin main
+          git fetch origin main
+
+          git reset --hard origin/main
 
 
           git add data/
 
 
-          git diff --cached --quiet || git commit -m "Update profile summary and stats"
+          git commit -m "Update profile summary and stats" || echo "No changes"
+
+
+          git push origin HEAD:main
 
 
           git push origin main
