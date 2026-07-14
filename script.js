@@ -2,7 +2,6 @@
 // Loader
 // =================================
 
-
 window.addEventListener("load",()=>{
 
 const loader =
@@ -23,7 +22,6 @@ loader.style.display="none";
 
 },1200);
 
-
 });
 
 
@@ -42,9 +40,7 @@ new IntersectionObserver(
 
 (entries)=>{
 
-
 entries.forEach(entry=>{
-
 
 if(entry.isIntersecting){
 
@@ -52,16 +48,12 @@ entry.target.classList.add("active");
 
 }
 
-
 });
-
 
 },
 
 {
-
 threshold:0.15
-
 }
 
 );
@@ -70,12 +62,11 @@ threshold:0.15
 
 document
 .querySelectorAll(".reveal")
-.forEach(section=>{
+.forEach(item=>{
 
-observer.observe(section);
+observer.observe(item);
 
 });
-
 
 
 
@@ -92,6 +83,8 @@ const themeButton =
 document.getElementById("theme-toggle");
 
 
+if(themeButton){
+
 
 themeButton.addEventListener(
 "click",
@@ -101,10 +94,7 @@ themeButton.addEventListener(
 document.body.classList.toggle("dark");
 
 
-
-if(
-document.body.classList.contains("dark")
-){
+if(document.body.classList.contains("dark")){
 
 themeButton.textContent="☀️";
 
@@ -120,6 +110,10 @@ themeButton.textContent="🌙";
 });
 
 
+}
+
+
+
 
 
 
@@ -129,7 +123,6 @@ themeButton.textContent="🌙";
 // =================================
 // GitHub Projects
 // =================================
-
 
 
 fetch(
@@ -161,7 +154,7 @@ repos
 (a,b)=>
 
 (
-b.stargazers_count +
+b.stargazers_count+
 b.forks_count
 
 )
@@ -169,7 +162,7 @@ b.forks_count
 -
 
 (
-a.stargazers_count +
+a.stargazers_count+
 a.forks_count
 
 )
@@ -199,18 +192,16 @@ ${repo.name}
 
 <p>
 
-${repo.description || 
-"Open Source Project"}
+${repo.description || "Open Source Project"}
 
 </p>
 
 
 
+<div class="repo-meta">
 
-<div class="badges">
 
-
-<span>
+<span class="badge">
 
 💻 ${repo.language || "Code"}
 
@@ -218,7 +209,7 @@ ${repo.description ||
 
 
 
-<span>
+<span class="badge">
 
 ⭐ ${repo.stargazers_count}
 
@@ -226,32 +217,31 @@ ${repo.description ||
 
 
 
-<span>
+<span class="badge">
 
 🍴 ${repo.forks_count}
 
 </span>
 
 
-
 </div>
-
 
 
 
 <br>
 
 
+<a
 
-<a 
 href="${repo.html_url}"
+
 target="_blank"
+
 class="button">
 
-View Project
+View Repository →
 
 </a>
-
 
 
 </div>
@@ -289,7 +279,6 @@ document.getElementById("projects")
 // =================================
 
 
-
 fetch(
 "data/github-stats.json"
 )
@@ -301,36 +290,21 @@ fetch(
 .then(data=>{
 
 
-document.getElementById("commits")
-.textContent =
+document.getElementById("commits").textContent =
 data.commits || 0;
 
 
-
-document.getElementById("prs")
-.textContent =
+document.getElementById("prs").textContent =
 data.pullRequests || 0;
 
 
-
-document.getElementById("issues")
-.textContent =
+document.getElementById("issues").textContent =
 data.issues || 0;
 
 
-
-document.getElementById("reviews")
-.textContent =
+document.getElementById("reviews").textContent =
 data.reviews || 0;
 
-
-})
-
-.catch(()=>{
-
-console.log(
-"Statistics unavailable"
-);
 
 });
 
@@ -347,7 +321,6 @@ console.log(
 // =================================
 
 
-
 fetch(
 "data/ai-summary.json"
 )
@@ -361,21 +334,18 @@ fetch(
 
 document
 .getElementById("ai-summary")
-.textContent =
-data.summary;
+.textContent=data.summary;
 
 
 })
-
 
 .catch(()=>{
 
 
 document
 .getElementById("ai-summary")
-.textContent =
-
-"Farbod Daneshjoo is a software developer focused on Python, Artificial Intelligence and Open Source development.";
+.textContent=
+"Software developer focused on Python, AI and Open Source.";
 
 
 });
@@ -393,15 +363,12 @@ document
 // =================================
 
 
-
 const aiButton =
 document.getElementById("ai-button");
 
 
-
 const aiInput =
 document.getElementById("ai-input");
-
 
 
 const aiAnswer =
@@ -417,7 +384,7 @@ aiButton.addEventListener(
 ()=>{
 
 
-const question =
+let question =
 aiInput.value.trim();
 
 
@@ -425,7 +392,7 @@ aiInput.value.trim();
 if(!question){
 
 aiAnswer.textContent=
-"Ask something first.";
+"Please enter a question.";
 
 return;
 
@@ -433,14 +400,9 @@ return;
 
 
 
-
-// نسخه اولیه بدون API
-
 aiAnswer.textContent=
 
-"Farbod AI: I'm currently building projects with Python, AI and Open Source. This assistant will become smarter soon.";
-
-
+"Farbod AI: I build Python projects, explore AI technologies and contribute to Open Source.";
 
 });
 
@@ -456,9 +418,19 @@ aiAnswer.textContent=
 
 
 // =================================
-// Currently Learning
+// Currently Learning JSON
 // =================================
 
+
+fetch(
+"data/learning.json"
+)
+
+
+.then(response=>response.json())
+
+
+.then(data=>{
 
 
 const learning =
@@ -466,46 +438,48 @@ document.getElementById("learning");
 
 
 
-if(learning){
+if(!learning)
+return;
 
 
-learning.innerHTML=`
+
+learning.innerHTML="";
+
+
+
+data.learning.forEach(item=>{
+
+
+learning.innerHTML += `
+
 
 <div class="card">
 
-<p>
 
-→ Advanced Python
+<h3>
 
-</p>
+${item.title}
 
-
-<p>
-
-→ AI Development
-
-</p>
+</h3>
 
 
 <p>
 
-→ Open Source Collaboration
-
-</p>
-
-
-<p>
-
-→ Developer Automation
+${item.description}
 
 </p>
 
 
 </div>
 
+
 `;
 
-}
+
+});
+
+
+});
 
 
 
@@ -520,20 +494,22 @@ learning.innerHTML=`
 // =================================
 
 
-
 let clicks=0;
 
 
+const logo =
+document.querySelector("nav h3");
 
-document
-.querySelector("nav h3")
-.addEventListener(
+
+if(logo){
+
+
+logo.addEventListener(
 "click",
 ()=>{
 
 
 clicks++;
-
 
 
 if(clicks===5){
@@ -544,15 +520,16 @@ alert(
 );
 
 
-
 clicks=0;
 
 
 }
 
 
-
 });
+
+
+}
 
 
 
@@ -563,13 +540,12 @@ clicks=0;
 
 
 // =================================
-// Footer Year
+// Footer
 // =================================
 
 
 const footer =
 document.querySelector("footer p");
-
 
 
 if(footer){
