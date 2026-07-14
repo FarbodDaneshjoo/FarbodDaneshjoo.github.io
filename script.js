@@ -1,28 +1,90 @@
 // =================================
-// Loader
+// Advanced Loader
 // =================================
 
-window.addEventListener("load",()=>{
+window.addEventListener(
+"load",
+()=>{
+
 
 const loader =
 document.getElementById("loader");
 
 
+const text =
+document.querySelector(".loader-text");
+
+
+if(loader && text){
+
+
+const messages=[
+
+"Initializing Farbod.dev",
+
+"Loading projects",
+
+"Connecting GitHub",
+
+"Preparing AI systems",
+
+"Welcome Farbod.dev"
+
+];
+
+
+let index=0;
+
+
+
+const interval=setInterval(()=>{
+
+
+text.textContent =
+messages[index];
+
+
+index++;
+
+
+
+if(index===messages.length){
+
+
+clearInterval(interval);
+
+
+
 setTimeout(()=>{
+
 
 loader.style.opacity="0";
 
 
 setTimeout(()=>{
 
+
 loader.style.display="none";
 
-},500);
+
+},800);
 
 
-},1200);
+},800);
+
+
+}
+
+
+},700);
+
+
+}
+
 
 });
+
+
 
 
 
@@ -40,20 +102,28 @@ new IntersectionObserver(
 
 (entries)=>{
 
+
 entries.forEach(entry=>{
+
 
 if(entry.isIntersecting){
 
+
 entry.target.classList.add("active");
+
 
 }
 
+
 });
+
 
 },
 
 {
-threshold:0.15
+
+threshold:.15
+
 }
 
 );
@@ -64,9 +134,13 @@ document
 .querySelectorAll(".reveal")
 .forEach(item=>{
 
+
 observer.observe(item);
 
+
 });
+
+
 
 
 
@@ -83,31 +157,31 @@ const themeButton =
 document.getElementById("theme-toggle");
 
 
+
 if(themeButton){
 
 
-themeButton.addEventListener(
-"click",
-()=>{
+themeButton.onclick=()=>{
 
 
 document.body.classList.toggle("dark");
 
 
-if(document.body.classList.contains("dark")){
 
-themeButton.textContent="☀️";
+themeButton.textContent =
 
-}
+document.body.classList.contains("dark")
 
-else{
+?
 
-themeButton.textContent="🌙";
+"☀️"
 
-}
+:
+
+"🌙";
 
 
-});
+};
 
 
 }
@@ -130,27 +204,32 @@ fetch(
 )
 
 
-.then(response=>response.json())
+.then(res=>res.json())
 
 
 .then(repos=>{
 
 
-const container =
+const box =
 document.getElementById("projects");
 
 
-container.innerHTML="";
+if(!box)
+return;
+
+
+
+box.innerHTML="";
 
 
 
 repos
 
+
 .filter(repo=>!repo.fork)
 
 
 .sort(
-
 (a,b)=>
 
 (
@@ -176,8 +255,7 @@ a.forks_count
 .forEach(repo=>{
 
 
-container.innerHTML += `
-
+box.innerHTML+=`
 
 <div class="repo">
 
@@ -189,7 +267,6 @@ ${repo.name}
 </h3>
 
 
-
 <p>
 
 ${repo.description || "Open Source Project"}
@@ -197,27 +274,24 @@ ${repo.description || "Open Source Project"}
 </p>
 
 
+<div class="badges">
 
-<div class="repo-meta">
 
-
-<span class="badge">
+<span>
 
 💻 ${repo.language || "Code"}
 
 </span>
 
 
-
-<span class="badge">
+<span>
 
 ⭐ ${repo.stargazers_count}
 
 </span>
 
 
-
-<span class="badge">
+<span>
 
 🍴 ${repo.forks_count}
 
@@ -227,17 +301,16 @@ ${repo.description || "Open Source Project"}
 </div>
 
 
-
 <br>
 
 
 <a
 
+class="button"
+
 href="${repo.html_url}"
 
-target="_blank"
-
-class="button">
+target="_blank">
 
 View Repository →
 
@@ -246,22 +319,9 @@ View Repository →
 
 </div>
 
-
 `;
 
-
 });
-
-
-})
-
-
-.catch(()=>{
-
-
-document.getElementById("projects")
-.innerHTML=
-"Unable to load projects";
 
 
 });
@@ -275,7 +335,7 @@ document.getElementById("projects")
 
 
 // =================================
-// GitHub Statistics
+// GitHub Stats
 // =================================
 
 
@@ -284,23 +344,34 @@ fetch(
 )
 
 
-.then(response=>response.json())
+.then(res=>res.json())
 
 
 .then(data=>{
 
 
+if(document.getElementById("commits"))
+
 document.getElementById("commits").textContent =
 data.commits || 0;
 
+
+
+if(document.getElementById("prs"))
 
 document.getElementById("prs").textContent =
 data.pullRequests || 0;
 
 
+
+if(document.getElementById("issues"))
+
 document.getElementById("issues").textContent =
 data.issues || 0;
 
+
+
+if(document.getElementById("reviews"))
 
 document.getElementById("reviews").textContent =
 data.reviews || 0;
@@ -326,26 +397,90 @@ fetch(
 )
 
 
-.then(response=>response.json())
+.then(res=>res.json())
 
 
 .then(data=>{
 
 
-document
-.getElementById("ai-summary")
-.textContent=data.summary;
+const summary =
+document.getElementById("ai-summary");
 
 
-})
 
-.catch(()=>{
+if(summary)
+
+summary.textContent=data.summary;
 
 
-document
-.getElementById("ai-summary")
-.textContent=
-"Software developer focused on Python, AI and Open Source.";
+});
+
+
+
+
+
+
+
+
+
+// =================================
+// Learning Section
+// =================================
+
+
+fetch(
+"data/learning.json"
+)
+
+
+.then(res=>res.json())
+
+
+.then(data=>{
+
+
+const learning =
+document.getElementById("learning");
+
+
+
+if(!learning)
+return;
+
+
+
+learning.innerHTML="";
+
+
+
+data.learning.forEach(item=>{
+
+
+learning.innerHTML+=`
+
+<div class="card">
+
+
+<h3>
+
+${item.title}
+
+</h3>
+
+
+<p>
+
+${item.description}
+
+</p>
+
+
+</div>
+
+`;
+
+
+});
 
 
 });
@@ -379,32 +514,29 @@ document.getElementById("ai-answer");
 if(aiButton){
 
 
-aiButton.addEventListener(
-"click",
-()=>{
+aiButton.onclick=()=>{
 
 
-let question =
-aiInput.value.trim();
+if(!aiInput.value){
 
-
-
-if(!question){
 
 aiAnswer.textContent=
-"Please enter a question.";
+"Ask something first.";
+
 
 return;
 
+
 }
 
 
 
 aiAnswer.textContent=
 
-"Farbod AI: I build Python projects, explore AI technologies and contribute to Open Source.";
+"Farbod AI: I build Python projects, explore AI and contribute to Open Source.";
 
-});
+
+};
 
 
 }
@@ -418,68 +550,49 @@ aiAnswer.textContent=
 
 
 // =================================
-// Currently Learning JSON
+// Visitor Counter
 // =================================
 
 
+const visitor =
+document.getElementById(
+"visitor-count"
+);
+
+
+
+if(visitor){
+
+
 fetch(
-"data/learning.json"
+"https://api.countapi.xyz/hit/farboddaneshjoo.github.io/visits"
 )
 
 
-.then(response=>response.json())
+.then(res=>res.json())
 
 
 .then(data=>{
 
 
-const learning =
-document.getElementById("learning");
+visitor.textContent =
+data.value;
 
 
-
-if(!learning)
-return;
+})
 
 
-
-learning.innerHTML="";
-
+.catch(()=>{
 
 
-data.learning.forEach(item=>{
-
-
-learning.innerHTML += `
-
-
-<div class="card">
-
-
-<h3>
-
-${item.title}
-
-</h3>
-
-
-<p>
-
-${item.description}
-
-</p>
-
-
-</div>
-
-
-`;
+visitor.textContent =
+"";
 
 
 });
 
 
-});
+}
 
 
 
@@ -501,12 +614,11 @@ const logo =
 document.querySelector("nav h3");
 
 
+
 if(logo){
 
 
-logo.addEventListener(
-"click",
-()=>{
+logo.onclick=()=>{
 
 
 clicks++;
@@ -516,7 +628,7 @@ if(clicks===5){
 
 
 alert(
-"🚀 Secret mode activated. Welcome to Farbod.dev"
+"🚀 Secret mode activated"
 );
 
 
@@ -526,7 +638,7 @@ clicks=0;
 }
 
 
-});
+};
 
 
 }
@@ -540,7 +652,7 @@ clicks=0;
 
 
 // =================================
-// Footer
+// Footer Year
 // =================================
 
 
@@ -548,10 +660,12 @@ const footer =
 document.querySelector("footer p");
 
 
+
 if(footer){
 
 
 footer.textContent =
 `© ${new Date().getFullYear()} Farbod Daneshjoo`;
+
 
 }
