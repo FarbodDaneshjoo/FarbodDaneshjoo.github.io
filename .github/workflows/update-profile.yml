@@ -1,11 +1,14 @@
-name: Update AI Profile Summary
+name: Update GitHub Profile Stats
+
 
 on:
 
   schedule:
     - cron: "0 0 * * *"
 
+
   workflow_dispatch:
+
 
 
 permissions:
@@ -13,9 +16,12 @@ permissions:
   contents: write
 
 
+
 jobs:
 
+
   update:
+
 
     runs-on: ubuntu-latest
 
@@ -30,7 +36,7 @@ jobs:
         with:
 
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+
 
 
 
@@ -44,11 +50,13 @@ jobs:
 
 
 
+
       - name: Install dependencies
 
         run: |
 
           pip install requests
+
 
 
 
@@ -64,15 +72,8 @@ jobs:
 
 
 
-      - name: Generate Free Summary
 
-        run: |
-
-          python scripts/generate_summary.py
-
-
-
-      - name: Commit changes
+      - name: Commit statistics
 
         run: |
 
@@ -81,16 +82,10 @@ jobs:
           git config user.email "github-actions@github.com"
 
 
-          git add data/
+          git add data/github-stats.json
 
 
-          git status
+          git diff --cached --quiet || git commit -m "Update GitHub statistics"
 
 
-          git diff --cached --quiet || git commit -m "Update profile summary and stats"
-
-      - name: Debug
-        run: |
-          grep -R "pull --rebase" .github/workflows || true
-
-          git push origin main
+          git push
