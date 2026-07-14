@@ -980,14 +980,24 @@ GitHub Profile
 
 </footer>
 
-<script>
-function loadCounter() {
+<script src="script.js"></script>
 
-    if (window.goatcounter && window.goatcounter.visit_count) {
+<script
+data-goatcounter="https://farboddaneshjoo.goatcounter.com/count"
+src="https://gc.zgo.at/count.js">
+</script>
+
+<script>
+
+function waitCounter(){
+
+    if(window.goatcounter && window.goatcounter.visit_count){
 
         window.goatcounter.visit_count({
 
             append:"#visitor-count",
+
+            path:"TOTAL",
 
             type:"html",
 
@@ -995,24 +1005,17 @@ function loadCounter() {
 
         });
 
-    } else {
+    }else{
 
-        setTimeout(loadCounter,100);
+        setTimeout(waitCounter,100);
 
     }
 
 }
 
-loadCounter();
-</script>
+waitCounter();
 
-<script
-data-goatcounter="https://farboddaneshjoo.goatcounter.com/count"
-async
-src="https://gc.zgo.at/count.js">
 </script>
-
-<script src="script.js"></script>
 
 </body>
 
