@@ -1,6 +1,40 @@
-// ===============================
-// Scroll Animation
-// ===============================
+// =================================
+// Loader
+// =================================
+
+
+window.addEventListener("load",()=>{
+
+const loader =
+document.getElementById("loader");
+
+
+setTimeout(()=>{
+
+loader.style.opacity="0";
+
+
+setTimeout(()=>{
+
+loader.style.display="none";
+
+},500);
+
+
+},1200);
+
+
+});
+
+
+
+
+
+
+
+// =================================
+// Scroll Reveal
+// =================================
 
 
 const observer =
@@ -8,7 +42,9 @@ new IntersectionObserver(
 
 (entries)=>{
 
+
 entries.forEach(entry=>{
+
 
 if(entry.isIntersecting){
 
@@ -16,12 +52,16 @@ entry.target.classList.add("active");
 
 }
 
+
 });
+
 
 },
 
 {
+
 threshold:0.15
+
 }
 
 );
@@ -30,9 +70,9 @@ threshold:0.15
 
 document
 .querySelectorAll(".reveal")
-.forEach(item=>{
+.forEach(section=>{
 
-observer.observe(item);
+observer.observe(section);
 
 });
 
@@ -42,55 +82,42 @@ observer.observe(item);
 
 
 
-// ===============================
-// Terminal Animation
-// ===============================
+
+// =================================
+// Dark Mode
+// =================================
 
 
-const messages=[
-
-"Building Python projects...",
-
-"Exploring Artificial Intelligence...",
-
-"Contributing to Open Source...",
-
-"Improving software engineering skills..."
-
-];
-
-
-let messageIndex=0;
-
-
-const terminalStatus =
-document.querySelector(
-".terminal p:last-child"
-);
+const themeButton =
+document.getElementById("theme-toggle");
 
 
 
-setInterval(()=>{
+themeButton.addEventListener(
+"click",
+()=>{
 
 
-if(terminalStatus){
-
-terminalStatus.textContent =
-messages[messageIndex];
-
-messageIndex++;
+document.body.classList.toggle("dark");
 
 
-if(messageIndex >= messages.length){
 
-messageIndex=0;
+if(
+document.body.classList.contains("dark")
+){
+
+themeButton.textContent="☀️";
 
 }
+
+else{
+
+themeButton.textContent="🌙";
 
 }
 
 
-},2500);
+});
 
 
 
@@ -99,9 +126,10 @@ messageIndex=0;
 
 
 
-// ===============================
+// =================================
 // GitHub Projects
-// ===============================
+// =================================
+
 
 
 fetch(
@@ -109,17 +137,17 @@ fetch(
 )
 
 
-.then(res=>res.json())
+.then(response=>response.json())
 
 
 .then(repos=>{
 
 
-const box =
+const container =
 document.getElementById("projects");
 
 
-box.innerHTML="";
+container.innerHTML="";
 
 
 
@@ -132,11 +160,19 @@ repos
 
 (a,b)=>
 
-(b.stargazers_count+b.forks_count)
+(
+b.stargazers_count +
+b.forks_count
+
+)
 
 -
 
-(a.stargazers_count+a.forks_count)
+(
+a.stargazers_count +
+a.forks_count
+
+)
 
 )
 
@@ -147,66 +183,81 @@ repos
 .forEach(repo=>{
 
 
-box.innerHTML += `
+container.innerHTML += `
 
 
 <div class="repo">
 
 
-<h3>${repo.name}</h3>
+<h3>
+
+${repo.name}
+
+</h3>
+
 
 
 <p>
 
 ${repo.description || 
-"Open source project"}
+"Open Source Project"}
 
 </p>
 
 
-<div class="repo-meta">
 
 
-<span class="badge">
+<div class="badges">
+
+
+<span>
 
 💻 ${repo.language || "Code"}
 
 </span>
 
 
-<span class="badge">
+
+<span>
 
 ⭐ ${repo.stargazers_count}
 
 </span>
 
 
-<span class="badge">
+
+<span>
 
 🍴 ${repo.forks_count}
 
 </span>
 
 
+
 </div>
+
 
 
 
 <br>
 
 
-<a href="${repo.html_url}" target="_blank">
 
-View Repository →
+<a 
+href="${repo.html_url}"
+target="_blank"
+class="button">
+
+View Project
 
 </a>
+
 
 
 </div>
 
 
 `;
-
 
 
 });
@@ -220,7 +271,8 @@ View Repository →
 
 document.getElementById("projects")
 .innerHTML=
-"Projects unavailable";
+"Unable to load projects";
+
 
 });
 
@@ -232,9 +284,10 @@ document.getElementById("projects")
 
 
 
-// ===============================
-// GitHub Stats
-// ===============================
+// =================================
+// GitHub Statistics
+// =================================
+
 
 
 fetch(
@@ -242,27 +295,42 @@ fetch(
 )
 
 
-.then(res=>res.json())
+.then(response=>response.json())
 
 
 .then(data=>{
 
 
-commits.textContent =
+document.getElementById("commits")
+.textContent =
 data.commits || 0;
 
 
-prs.textContent =
+
+document.getElementById("prs")
+.textContent =
 data.pullRequests || 0;
 
 
-issues.textContent =
+
+document.getElementById("issues")
+.textContent =
 data.issues || 0;
 
 
-reviews.textContent =
+
+document.getElementById("reviews")
+.textContent =
 data.reviews || 0;
 
+
+})
+
+.catch(()=>{
+
+console.log(
+"Statistics unavailable"
+);
 
 });
 
@@ -273,9 +341,11 @@ data.reviews || 0;
 
 
 
-// ===============================
+
+// =================================
 // AI Summary
-// ===============================
+// =================================
+
 
 
 fetch(
@@ -283,7 +353,7 @@ fetch(
 )
 
 
-.then(res=>res.json())
+.then(response=>response.json())
 
 
 .then(data=>{
@@ -304,7 +374,9 @@ data.summary;
 document
 .getElementById("ai-summary")
 .textContent =
-"Software developer focused on Python, AI and Open Source development.";
+
+"Farbod Daneshjoo is a software developer focused on Python, Artificial Intelligence and Open Source development.";
+
 
 });
 
@@ -315,11 +387,195 @@ document
 
 
 
-// ===============================
+
+// =================================
+// Ask Farbod AI
+// =================================
+
+
+
+const aiButton =
+document.getElementById("ai-button");
+
+
+
+const aiInput =
+document.getElementById("ai-input");
+
+
+
+const aiAnswer =
+document.getElementById("ai-answer");
+
+
+
+if(aiButton){
+
+
+aiButton.addEventListener(
+"click",
+()=>{
+
+
+const question =
+aiInput.value.trim();
+
+
+
+if(!question){
+
+aiAnswer.textContent=
+"Ask something first.";
+
+return;
+
+}
+
+
+
+
+// نسخه اولیه بدون API
+
+aiAnswer.textContent=
+
+"Farbod AI: I'm currently building projects with Python, AI and Open Source. This assistant will become smarter soon.";
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+// =================================
+// Currently Learning
+// =================================
+
+
+
+const learning =
+document.getElementById("learning");
+
+
+
+if(learning){
+
+
+learning.innerHTML=`
+
+<div class="card">
+
+<p>
+
+→ Advanced Python
+
+</p>
+
+
+<p>
+
+→ AI Development
+
+</p>
+
+
+<p>
+
+→ Open Source Collaboration
+
+</p>
+
+
+<p>
+
+→ Developer Automation
+
+</p>
+
+
+</div>
+
+`;
+
+}
+
+
+
+
+
+
+
+
+
+// =================================
+// Easter Egg
+// =================================
+
+
+
+let clicks=0;
+
+
+
+document
+.querySelector("nav h3")
+.addEventListener(
+"click",
+()=>{
+
+
+clicks++;
+
+
+
+if(clicks===5){
+
+
+alert(
+"🚀 Secret mode activated. Welcome to Farbod.dev"
+);
+
+
+
+clicks=0;
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// =================================
 // Footer Year
-// ===============================
+// =================================
 
 
-document.querySelector("footer p")
-.textContent =
+const footer =
+document.querySelector("footer p");
+
+
+
+if(footer){
+
+
+footer.textContent =
 `© ${new Date().getFullYear()} Farbod Daneshjoo`;
+
+}
