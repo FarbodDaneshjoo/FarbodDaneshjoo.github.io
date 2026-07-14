@@ -1,64 +1,90 @@
 name: Update AI Profile Summary
 
+
 on:
+
   schedule:
+
     - cron: "0 0 * * *"
+
 
   workflow_dispatch:
 
 
+
+
 permissions:
+
   contents: write
+
+
 
 
 jobs:
 
+
   update:
 
+
     runs-on: ubuntu-latest
+
 
 
     steps:
 
 
+
       - name: Checkout repository
+
         uses: actions/checkout@v4
 
 
 
+
+
       - name: Setup Python
+
         uses: actions/setup-python@v5
 
         with:
+
           python-version: "3.11"
 
 
 
+
+
       - name: Install dependencies
+
         run: |
+
           pip install requests
+
+
 
 
 
       - name: Update GitHub Statistics
 
         env:
+
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+
         run: |
+
           python scripts/update_stats.py
 
 
 
 
-      - name: Generate AI Summary
 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      - name: Generate Free Summary
 
         run: |
+
           python scripts/generate_summary.py
+
 
 
 
@@ -71,8 +97,11 @@ jobs:
 
           git config user.email "github-actions@github.com"
 
+
           git add data/
 
-          git commit -m "Update profile data" || echo "No changes"
+
+          git commit -m "Update profile summary and stats" || echo "No changes"
+
 
           git push
