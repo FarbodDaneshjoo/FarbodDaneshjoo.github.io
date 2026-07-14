@@ -138,8 +138,17 @@ json={
 
 
 
-result=response.json()
+result = response.json()
 
+
+print("OpenAI Response:")
+print(json.dumps(result, indent=2))
+
+
+if "error" in result:
+    raise Exception(
+        result["error"]["message"]
+    )
 
 
 summary = result["choices"][0]["message"]["content"]
