@@ -1,33 +1,67 @@
+// Scroll animation
+
+
+const observer =
+new IntersectionObserver((entries)=>{
+
+
+entries.forEach(entry=>{
+
+
+if(entry.isIntersecting){
+
+
+entry.target.classList.add("active");
+
+
+}
+
+
+});
+
+
+});
+
+
+
+document
+.querySelectorAll(".reveal")
+.forEach(
+item=>observer.observe(item)
+);
+
+
+
+
+
+
+
+// GitHub Projects
+
+
 fetch(
 "https://api.github.com/users/FarbodDaneshjoo/repos"
 )
 
 
-.then(response=>response.json())
+.then(res=>res.json())
 
 
 .then(repos=>{
 
 
-const box=document.getElementById("projects");
+let box=document.getElementById("projects");
 
 
 box.innerHTML="";
 
 
 repos
-.sort(
-(a,b)=>b.stargazers_count-a.stargazers_count
-)
-
-
 .slice(0,6)
-
-
 .forEach(repo=>{
 
 
-box.innerHTML += `
+box.innerHTML +=`
 
 
 <div class="repo">
@@ -47,7 +81,7 @@ ${repo.description || "No description"}
 </p>
 
 
-<a href="${repo.html_url}" target="_blank">
+<a href="${repo.html_url}">
 
 View Project
 
@@ -61,15 +95,6 @@ View Project
 
 
 });
-
-
-})
-
-.catch(()=>{
-
-
-document.getElementById("projects").innerHTML =
-"Could not load projects";
 
 
 });
