@@ -1,14 +1,13 @@
-// ==========================
-// Scroll Animation
-// ==========================
+// ===============================
+// Scroll Reveal Animation
+// ===============================
 
 
 const observer = new IntersectionObserver(
+
 (entries)=>{
 
-
 entries.forEach(entry=>{
-
 
 if(entry.isIntersecting){
 
@@ -16,29 +15,103 @@ entry.target.classList.add("active");
 
 }
 
-
 });
 
+},
+
+{
+
+threshold:0.15
 
 }
+
 );
 
 
 
 document
 .querySelectorAll(".reveal")
-.forEach(
-item=>observer.observe(item)
+.forEach(element=>{
+
+observer.observe(element);
+
+});
+
+
+
+
+
+
+
+// ===============================
+// Terminal Typing Effect
+// ===============================
+
+
+const terminalLines = [
+
+"Building software projects...",
+
+"Exploring Artificial Intelligence...",
+
+"Contributing to Open Source...",
+
+"Learning something new every day..."
+
+];
+
+
+let terminalIndex = 0;
+
+
+
+const statusText = document.querySelector(
+".terminal p:last-child"
 );
 
 
 
+function updateTerminal(){
+
+
+if(!statusText)
+return;
 
 
 
-// ==========================
+statusText.textContent =
+terminalLines[terminalIndex];
+
+
+
+terminalIndex++;
+
+
+if(terminalIndex >= terminalLines.length){
+
+terminalIndex = 0;
+
+}
+
+
+
+}
+
+
+
+setInterval(updateTerminal,2500);
+
+
+
+
+
+
+
+
+// ===============================
 // GitHub Projects
-// ==========================
+// ===============================
+
 
 
 fetch(
@@ -52,7 +125,9 @@ fetch(
 .then(repos=>{
 
 
-const box=document.getElementById("projects");
+const box =
+document.getElementById("projects");
+
 
 
 box.innerHTML="";
@@ -61,10 +136,16 @@ box.innerHTML="";
 
 repos
 
+.filter(repo=>!repo.fork)
+
+
 .sort(
+
 (a,b)=>
+
 b.stargazers_count -
 a.stargazers_count
+
 )
 
 
@@ -87,9 +168,10 @@ ${repo.name}
 </h3>
 
 
+
 <p>
 
-${repo.description || "No description"}
+${repo.description || "Open source project"}
 
 </p>
 
@@ -97,18 +179,35 @@ ${repo.description || "No description"}
 
 <p>
 
-⭐ ${repo.stargazers_count}
+💻 ${repo.language || "Code"}
 
 </p>
 
 
 
-<a href="${repo.html_url}"
+<p>
+
+⭐ ${repo.stars || repo.stargazers_count}
+
+&nbsp;
+
+🍴 ${repo.forks_count}
+
+</p>
+
+
+
+
+<a
+
+href="${repo.html_url}"
+
 target="_blank">
 
-View Project
+View Repository →
 
 </a>
+
 
 
 </div>
@@ -123,11 +222,13 @@ View Project
 
 })
 
+
 .catch(()=>{
 
 
 document.getElementById("projects")
-.innerHTML="Could not load projects";
+.innerHTML =
+"Unable to load projects.";
 
 
 });
@@ -140,10 +241,10 @@ document.getElementById("projects")
 
 
 
-
-// ==========================
+// ===============================
 // GitHub Statistics
-// ==========================
+// ===============================
+
 
 
 fetch(
@@ -157,32 +258,42 @@ fetch(
 .then(data=>{
 
 
-document.getElementById("commits")
-.innerHTML=data.commits;
+document
+.getElementById("commits")
+.textContent =
+data.commits ?? 0;
 
 
 
-document.getElementById("prs")
-.innerHTML=data.pullRequests;
+document
+.getElementById("prs")
+.textContent =
+data.pullRequests ?? 0;
 
 
 
-document.getElementById("issues")
-.innerHTML=data.issues;
+document
+.getElementById("issues")
+.textContent =
+data.issues ?? 0;
 
 
 
-document.getElementById("reviews")
-.innerHTML=data.reviews;
+document
+.getElementById("reviews")
+.textContent =
+data.reviews ?? 0;
+
 
 
 })
+
 
 .catch(()=>{
 
 
 console.log(
-"Stats file not found"
+"GitHub stats unavailable"
 );
 
 
@@ -196,9 +307,10 @@ console.log(
 
 
 
-// ==========================
-// AI Summary
-// ==========================
+// ===============================
+// GitHub AI Summary
+// ===============================
+
 
 
 fetch(
@@ -212,22 +324,55 @@ fetch(
 .then(data=>{
 
 
-document.getElementById(
-"ai-summary"
-)
-.innerHTML=data.summary;
+document
+.getElementById("ai-summary")
+.textContent =
+data.summary;
+
 
 
 })
 
+
 .catch(()=>{
 
 
-document.getElementById(
-"ai-summary"
-)
-.innerHTML=
-"AI summary is not available yet.";
+document
+.getElementById("ai-summary")
+.textContent =
+
+"Farbod Daneshjoo is a software developer focused on Python, AI, ROS2 and Open Source development.";
 
 
 });
+
+
+
+
+
+
+
+
+
+// ===============================
+// Current Year
+// ===============================
+
+
+
+const year =
+new Date().getFullYear();
+
+
+
+const footer =
+document.querySelector("footer p");
+
+
+
+if(footer){
+
+footer.textContent =
+`© ${year} Farbod Daneshjoo`;
+
+}
