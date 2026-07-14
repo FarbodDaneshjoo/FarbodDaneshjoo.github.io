@@ -1,4 +1,3 @@
-
 // ==========================
 // Scroll Animation
 // ==========================
@@ -37,11 +36,9 @@ item=>observer.observe(item)
 
 
 
-
 // ==========================
 // GitHub Projects
 // ==========================
-
 
 
 fetch(
@@ -55,7 +52,7 @@ fetch(
 .then(repos=>{
 
 
-let box=document.getElementById("projects");
+const box=document.getElementById("projects");
 
 
 box.innerHTML="";
@@ -74,11 +71,10 @@ a.stargazers_count
 .slice(0,6)
 
 
-
 .forEach(repo=>{
 
 
-box.innerHTML +=`
+box.innerHTML += `
 
 
 <div class="repo">
@@ -98,11 +94,13 @@ ${repo.description || "No description"}
 </p>
 
 
+
 <p>
 
 ⭐ ${repo.stargazers_count}
 
 </p>
+
 
 
 <a href="${repo.html_url}"
@@ -123,6 +121,15 @@ View Project
 });
 
 
+})
+
+.catch(()=>{
+
+
+document.getElementById("projects")
+.innerHTML="Could not load projects";
+
+
 });
 
 
@@ -133,8 +140,9 @@ View Project
 
 
 
+
 // ==========================
-// GitHub Stats
+// GitHub Statistics
 // ==========================
 
 
@@ -149,28 +157,33 @@ fetch(
 .then(data=>{
 
 
-document.getElementById(
-"commits"
-).innerHTML=data.commits;
+document.getElementById("commits")
+.innerHTML=data.commits;
 
 
 
-document.getElementById(
-"prs"
-).innerHTML=data.pullRequests;
+document.getElementById("prs")
+.innerHTML=data.pullRequests;
 
 
 
-document.getElementById(
-"issues"
-).innerHTML=data.issues;
+document.getElementById("issues")
+.innerHTML=data.issues;
 
 
 
-document.getElementById(
-"reviews"
-).innerHTML=data.reviews;
+document.getElementById("reviews")
+.innerHTML=data.reviews;
 
+
+})
+
+.catch(()=>{
+
+
+console.log(
+"Stats file not found"
+);
 
 
 });
@@ -201,7 +214,20 @@ fetch(
 
 document.getElementById(
 "ai-summary"
-).innerHTML=data.summary;
+)
+.innerHTML=data.summary;
+
+
+})
+
+.catch(()=>{
+
+
+document.getElementById(
+"ai-summary"
+)
+.innerHTML=
+"AI summary is not available yet.";
 
 
 });
