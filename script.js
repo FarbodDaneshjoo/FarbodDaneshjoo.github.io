@@ -1,8 +1,11 @@
-// Scroll animation
+
+// ==========================
+// Scroll Animation
+// ==========================
 
 
-const observer =
-new IntersectionObserver((entries)=>{
+const observer = new IntersectionObserver(
+(entries)=>{
 
 
 entries.forEach(entry=>{
@@ -10,9 +13,7 @@ entries.forEach(entry=>{
 
 if(entry.isIntersecting){
 
-
 entry.target.classList.add("active");
-
 
 }
 
@@ -20,7 +21,8 @@ entry.target.classList.add("active");
 });
 
 
-});
+}
+);
 
 
 
@@ -36,7 +38,10 @@ item=>observer.observe(item)
 
 
 
+// ==========================
 // GitHub Projects
+// ==========================
+
 
 
 fetch(
@@ -44,7 +49,7 @@ fetch(
 )
 
 
-.then(res=>res.json())
+.then(response=>response.json())
 
 
 .then(repos=>{
@@ -56,8 +61,20 @@ let box=document.getElementById("projects");
 box.innerHTML="";
 
 
+
 repos
+
+.sort(
+(a,b)=>
+b.stargazers_count -
+a.stargazers_count
+)
+
+
 .slice(0,6)
+
+
+
 .forEach(repo=>{
 
 
@@ -81,7 +98,15 @@ ${repo.description || "No description"}
 </p>
 
 
-<a href="${repo.html_url}">
+<p>
+
+⭐ ${repo.stargazers_count}
+
+</p>
+
+
+<a href="${repo.html_url}"
+target="_blank">
 
 View Project
 
@@ -94,7 +119,89 @@ View Project
 `;
 
 
+
 });
+
+
+});
+
+
+
+
+
+
+
+
+
+// ==========================
+// GitHub Stats
+// ==========================
+
+
+fetch(
+"data/github-stats.json"
+)
+
+
+.then(response=>response.json())
+
+
+.then(data=>{
+
+
+document.getElementById(
+"commits"
+).innerHTML=data.commits;
+
+
+
+document.getElementById(
+"prs"
+).innerHTML=data.pullRequests;
+
+
+
+document.getElementById(
+"issues"
+).innerHTML=data.issues;
+
+
+
+document.getElementById(
+"reviews"
+).innerHTML=data.reviews;
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// ==========================
+// AI Summary
+// ==========================
+
+
+fetch(
+"data/ai-summary.json"
+)
+
+
+.then(response=>response.json())
+
+
+.then(data=>{
+
+
+document.getElementById(
+"ai-summary"
+).innerHTML=data.summary;
 
 
 });
