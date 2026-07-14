@@ -89,5 +89,8 @@ jobs:
 
           git diff --cached --quiet || git commit -m "Update profile summary and stats"
 
+      - name: Debug
+        run: |
+          grep -R "pull --rebase" .github/workflows || true
 
           git push origin main
